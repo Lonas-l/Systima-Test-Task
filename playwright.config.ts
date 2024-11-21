@@ -14,14 +14,32 @@ export default defineConfig({
   use: {
     baseURL: process.env.E2E_TEST_BASE_URL,
     trace: 'on',
-    storageState: './cookies.json',
   },
-  globalSetup: './tests/globalSetup.ts',
-
   projects: [
+    { name: 'setup', testMatch: '**/tests/*.setup.ts' },
+
     {
-      name: 'chromium',
+      name: 'auth',
       use: { ...devices['Desktop Chrome'] },
+      testMatch: '**/auth/*.spec.ts',
+    },
+    {
+      name: 'bookkeeping-chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'cookies.json',
+      },
+      dependencies: ['setup'],
+      testMatch: '**/bookkeeping/*.spec.ts',
+    },
+    {
+      name: 'contactCreation-chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'cookies.json',
+      },
+      dependencies: ['setup'],
+      testMatch: '**/contactCreation/*.spec.ts',
     },
   ],
 });

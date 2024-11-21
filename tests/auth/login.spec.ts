@@ -3,8 +3,6 @@ import { test } from '../../fixtures/pages-initialization';
 import { ERROR_MESSAGES } from '../../constants/dictionary';
 
 test.describe('Login Module', () => {
-  test.use({ storageState: 'noAuth.json' });
-
   test.beforeEach(async ({ page }) => {
     await page.context().clearCookies();
     await page.goto('/');
